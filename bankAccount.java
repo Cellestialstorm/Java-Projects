@@ -10,7 +10,10 @@ public class bankAccount {
 		String name = scan.nextLine();
 		System.out.print("Enter the initial Deposite amount: ");
 		double initialBalance = scan.nextDouble();
-		bankAcc Account = new bankAcc(name, initialBalance);
+		System.out.print("Create PIN for your transactions (cannot be changed once created!): ");
+		int pin = scan.nextInt();
+		scan.nextLine();
+		bankAcc Account = new bankAcc(name, initialBalance, pin);
 
 		do {
 			System.out.println("\nSelect the operation you want to perform: ");
@@ -49,15 +52,29 @@ public class bankAccount {
 				break;
 
 			case 3:
-				System.out.print("\nEnter the Amount to be Deposited: ");
-				double Amount = scan.nextDouble();
-				Account.depositMoney(Amount);
+				System.out.print("\nEnter your PIN: ");
+				int pin = scan.nextInt();
+				scan.nextLine();
+				if (Account.getPin() == pin) {
+					System.out.print("\nEnter the Amount to be Deposited: ");
+					double Amount = scan.nextDouble();
+					Account.depositMoney(Amount);
+				} else {
+					System.out.println("Transaction Error (Incorrect PIN)"); 
+				}
 				break;
 
 			case 4:
-				System.out.print("\nEnter the Amount to be Withdrawn: ");
-				Amount = scan.nextDouble();
-				Account.withdrawMoney(Amount);
+				System.out.print("\nEnter your PIN: ");
+				pin = scan.nextInt();
+				scan.nextLine();
+				if (Account.getPin() == pin) {
+					System.out.print("\nEnter the Amount to be Withdrawn: ");
+					double Amount = scan.nextDouble();
+					Account.withdrawMoney(Amount);
+				} else {
+					System.out.println("Transaction Error (Incorrect PIN)"); 
+				}
 				break;
 		}
 	}
@@ -66,20 +83,27 @@ public class bankAccount {
 class bankAcc {
 	private String accHolder;
 	private double balance;
-	
+	private int pin;
+
 	// Constructor 
-	public bankAcc(String accHolder, double initialBalance) {
+	public bankAcc(String accHolder, double initialBalance, int pin) {
 		this.accHolder = accHolder;
 		if (initialBalance > 0) {
 			this.balance = initialBalance;
 		} else {
 			this.balance = 0;
 		}
+		this.pin = pin;
 	}
 	
 	//getter method to get Account Holder
 	public String getAccountHolder() {
 		return accHolder;
+	}
+	
+	//getter method to get pin
+	public int getPin() {
+		return pin;
 	}
 	
 	//setter method to change Account Holder
