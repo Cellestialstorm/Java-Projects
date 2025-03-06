@@ -21,18 +21,19 @@ public class bankAccount {
 			System.out.println("2 to update Account name");
 			System.out.println("3 to deposite Amount");
 			System.out.println("4 to Withdraw Money");
-			System.out.println("5 to Exit");
+			System.out.println("5 to Make Payment");
+			System.out.println("6 to Exit");
 			System.out.print("Enter your choice: ");
 		
 			choice = scan.nextInt();
 			scan.nextLine(); //consumes the new line character caused by nextInt() 
 
-			if (choice >= 1 && choice <= 4) {
+			if (choice >= 1 && choice <= 5) {
 				switchCases(choice, scan, Account);
-			} else if (choice != 5) {
+			} else if (choice != 6) {
 				System.out.println("Enter a valid choice!");
 			}
-		} while(choice != 5);
+		} while(choice != 6);
 		scan.close();
 		System.out.println("Thank you for using our services!");
 	}
@@ -76,11 +77,25 @@ public class bankAccount {
 					System.out.println("Transaction Error (Incorrect PIN)"); 
 				}
 				break;
+			case 5:
+				System.out.print("Name of Recipient: ");
+				String RecipientName = scan.nextLine();
+				System.out.print("Recipient Account ID: ");
+				int id = scan.nextInt();
+				System.out.print("Amount: ");
+				double amount = scan.nextDouble();
+				System.out.print("Enter your pin: ");
+				pin = scan.nextInt();
+				if (Account.getPin() == pin) {
+					Account.makePayment(RecipientName, amount, id);
+				} else {
+					System.out.print("Invalid pin!");
+				}
 		}
 	}
 }
 
-class bankAcc {
+class bankAcc implements Payment {
 	private String accHolder;
 	private double balance;
 	private int pin;
@@ -136,4 +151,17 @@ class bankAcc {
 			System.out.println("Invalid withdrawal amount or Insufficient Balance!");
 		}
 	}
+	
+	public void makePayment(String RecipientName, double amount, int id) {
+		if (amount > 0 && amount < balance) {
+			balance -= amount;
+			System.out.println("Transferred $" + amount + " to " + RecipientName + " bearing ID " + id);
+		} else {
+			System.out.println("Invalid Transfer Amount or Insufficient Balance!");
+		}
+	}
+}
+
+interface Payment {
+	void makePayment(String RecipientName, double amount, int id);
 }
