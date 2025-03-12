@@ -71,7 +71,6 @@ public class bankAccount {
 				break;
 				
 			case 2:
-				scan.nextLine();
 				System.out.print("\nEnter new name for Account Holder: ");
 				String newName = scan.nextLine();
 				Account.changeAccountHolder(newName);
@@ -82,7 +81,7 @@ public class bankAccount {
 				String pinStr;
 				while (n != 0) {
 					if (console != null) {
-						char[] pinArray = console.readPassword("Create PIN (4 Digits only): ");
+						char[] pinArray = console.readPassword("/nEnter PIN (4 Digits only): ");
 						pinStr = new String(pinArray);
 					} else {
 						System.out.print("Create PIN (4 digits only): ");
@@ -213,6 +212,7 @@ class bankAcc implements Payment {
 		System.out.println("Withdrawn: $" + amount);
 	}
 	
+	//setter method to make payment
 	public void makePayment(String RecipientName, double amount, int id) {
 		if (amount > 0 && amount < balance) {
 			balance -= amount;
