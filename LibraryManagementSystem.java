@@ -88,7 +88,7 @@ public class LibraryManagementSystem {
 	
 	public static void displayBooks() {
 		if (bookList.isEmpty()) {
-			System.out.println("No books available in the library!");
+			System.out.println("\nNo books available in the library!");
 		} else {
 			System.out.println("\nLibrary Books: ");
 			for (Book book : bookList) {
@@ -123,19 +123,59 @@ public class LibraryManagementSystem {
 		
 		do {
 			System.out.println("\n=== Library Management System ===");
-            System.out.println("1. Add Book");
-            System.out.println("2. Remove Book");
-            System.out.println("3. Search Book");
-            System.out.println("4. Display All Books");
-            System.out.println("5. Borrow Book");
-            System.out.println("6. Return Book");
-            System.out.println("7. Exit");
+            System.out.println("1. Librarian Login");
+            System.out.println("2. Member Login");
+            System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
             choice = scan.nextInt();
 			
 			switch(choice) {
 				case 1:
-					System.out.print("Enter Book ID: ");
+					int tries = 3;
+					while (tries != 0) {
+						System.out.print("Enter Pin to access: ");
+						int pin = scan.nextInt();
+						if (pin == 9834) {
+							Librarian(scan);
+							break;
+						} else {
+							System.out.println("Incorrect Pin! Please enter the 4 digit Pin.");
+							tries -= 1;
+						}
+					}
+					System.out.println("Too many Incorrect Tries!");
+					break;
+					
+				case 2:
+					Member(scan);
+                    break;
+					
+				case 3:
+					System.out.println("Exiting Library Management System. Thank you!");
+                    break;
+					
+				default:
+					System.out.println("Invalid choice! Please enter a valid option.");
+			}
+		} while (choice != 3);
+			
+		scan.close();
+	}
+	
+	public static void Librarian(Scanner scan) {
+		while (true) {
+			System.out.println("\n=== Library Management System ===");
+            System.out.println("1. Add Book");
+            System.out.println("2. Remove Book");
+            System.out.println("3. Search Book");
+            System.out.println("4. Display All Books");
+            System.out.println("5. Return to Main Menu");
+            System.out.print("Enter your choice: ");
+            int choice = scan.nextInt();
+			
+			switch(choice) {
+				case 1:
+					System.out.print("\nEnter Book ID: ");
                     int id = scan.nextInt();
                     scan.nextLine(); // Consume newline
                     System.out.print("Enter Book Title: ");
@@ -146,13 +186,13 @@ public class LibraryManagementSystem {
                     break;
 					
 				case 2:
-					System.out.print("Enter Book ID to Remove: ");
+					System.out.print("\nEnter Book ID to Remove: ");
                     int removeId = scan.nextInt();
                     removeBook(removeId);
                     break;
 					
 				case 3:
-					System.out.print("Enter Book ID to Search: ");
+					System.out.print("\nEnter Book ID to Search: ");
                     int searchId = scan.nextInt();
                     searchBook(searchId);
                     break;
@@ -162,26 +202,54 @@ public class LibraryManagementSystem {
                     break;
 					
 				case 5:
-					System.out.print("Enter Book ID to Borrow: ");
+					return;
+				
+				default:
+					System.out.println("\nInvalid choice! Please enter a valid option.");
+			}
+		}
+	}
+	
+	public static void Member(Scanner scan) {
+		while(true) {
+			System.out.println("\n=== Library Management System ===");
+            System.out.println("1. Search Book");
+            System.out.println("2. Display All Books");
+            System.out.println("3. Borrow Book");
+            System.out.println("4. Return Book");
+            System.out.println("5. Return to Main Menu");
+            System.out.print("Enter your choice: ");
+            int choice = scan.nextInt();
+			
+			switch (choice) {
+				case 1:
+					System.out.print("\nEnter Book ID to Search: ");
+                    int searchId = scan.nextInt();
+                    searchBook(searchId);
+                    break;
+					
+				case 2:
+					displayBooks();
+                    break;
+					
+				case 3:
+					System.out.print("\nEnter Book ID to Borrow: ");
                     int borrowId = scan.nextInt();
                     borrowBook(borrowId);
                     break;
 					
-				case 6:
-					System.out.print("Enter Book ID to Return: ");
+				case 4:
+					System.out.print("\nEnter Book ID to Return: ");
                     int returnId = scan.nextInt();
                     returnBook(returnId);
                     break;
 					
-				case 7:
-					System.out.println("Exiting Library Management System. Thank you!");
-                    break;
+				case 5:
+					return;
 					
 				default:
-					System.out.println("Invalid choice! Please enter a valid option.");
+					System.out.println("\nInvalid choice! Please enter a valid option.");
 			}
-		} while (choice != 7);
-			
-		scan.close();
+		}
 	}
 }
