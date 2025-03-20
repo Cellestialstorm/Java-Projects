@@ -1,0 +1,7 @@
+101,Rohan Sharma,4563,73462.0
+102,Pratik Chettri,1345,68681
+103,Solan Gurung,6721,987186
+104,Prenisha Thakuri,8791,719861
+105,Swapnil Chettri,9863,62168
+106,Prajal Bhattarai,3615,68168
+107,Jyotirmayee Mahanta,9873,28748
